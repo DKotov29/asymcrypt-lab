@@ -21,8 +21,7 @@ fn main() {
     // let m = generator::l20::generate(arr, 5);
     // println!("len: {}, {m}", m.len());
 
-    let c: char = char::from(0b1001);
-    println!("\"{c}\"");
+
 }
 
 // тести приймають послідовності байтів
