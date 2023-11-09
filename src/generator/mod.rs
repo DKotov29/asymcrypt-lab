@@ -1,3 +1,9 @@
 pub mod buildin;
 pub mod lehmer;
 pub mod l20;
+pub mod l89;
+pub mod geffe;
+pub mod wolfram;
+pub mod librarian;
+pub mod bm;
+pub mod bbs;
