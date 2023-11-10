@@ -1,8 +1,8 @@
+use statrs::function::erf::erf_inv;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
-use statrs::function::erf::erf_inv;
 
-pub fn test(seq: Vec<u8>, a: f64) -> (bool, f64, f64, Duration){
+pub fn test(seq: Vec<u8>, a: f64) -> (bool, f64, f64, Duration) {
     let mut start_time = Instant::now();
     let n = seq.len() / 2;
     let mut freq: HashMap<(u8, u8), usize> = HashMap::new();
@@ -35,7 +35,12 @@ pub fn test(seq: Vec<u8>, a: f64) -> (bool, f64, f64, Duration){
     statistic_value *= n as f64;
     let l = 255f64.powf(2.0);
     let z = erf_inv(1.0 - a);
-    let critic_value: f64 = (2f64*l).sqrt() * z + l;
+    let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
-    return (statistic_value <= critic_value, statistic_value, critic_value, elapsed);
+    return (
+        statistic_value <= critic_value,
+        statistic_value,
+        critic_value,
+        elapsed,
+    );
 }
