@@ -1,4 +1,5 @@
 mod generator;
+mod criterion;
 
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::prelude::*;
@@ -20,7 +21,11 @@ fn main() {
     // println!("len: {}, {arr}", arr.len());
     // let m = generator::l20::generate(arr, 5);
     // println!("len: {}, {m}", m.len());
-
+    let res = criterion::sign_independency::test(vec![214,168,122,77, 32, 244,200,157,114,72,30,245,204,163,123,84,45,6,224,186], 0.01);
+    println!("{res:?}");
+    return;
+    criterion::sign_independency::test(vec![], 5.0);
+    return;
     // bitvec into byte vec
     let b = generator::buildin::generate();
     let mut cc = b.clone();
@@ -44,5 +49,11 @@ fn main() {
         panic!("something left to read, so something failed");
     }
 }
-
-// тести приймають послідовності байтів
+// todo after every generator
+/*if print_info:
+        print("_____________Uniformity test_____________")
+        print(f'{a=}')
+        print(f'{actual_statistic_value=}')
+        print(f'{critical_statistic_value=}')
+        print("Test time: ", end-start)
+*/
