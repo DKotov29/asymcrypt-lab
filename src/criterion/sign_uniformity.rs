@@ -2,7 +2,7 @@ use num_integer::Roots;
 use statrs::function::erf::erf_inv;
 use std::time::{Duration, Instant};
 
-pub fn test(seq: Vec<u8>, a: f64) -> (bool, f64, f64, Duration) {
+pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     let start_time = Instant::now();
     let mut statistic_value = 0f64;
     let len = seq.len();

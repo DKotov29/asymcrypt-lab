@@ -2,7 +2,7 @@ use statrs::function::erf::erf_inv;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
-pub fn test(seq: Vec<u8>, a: f64) -> (bool, f64, f64, Duration) {
+pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     let mut start_time = Instant::now();
     let n = seq.len() / 2;
     let mut freq: HashMap<(u8, u8), usize> = HashMap::new();

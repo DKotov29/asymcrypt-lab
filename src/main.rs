@@ -1,10 +1,16 @@
 mod convert;
 mod criterion;
 mod generator;
+mod macros;
 
+use crate::convert::WrapperBitVec;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::prelude::*;
 use bitvec::view::BitViewSized;
+
+#[macro_use]
+extern crate prettytable;
+use prettytable::Table;
 
 fn main() {
     // let mut buildin = generator::buildin::generate();
@@ -23,16 +29,24 @@ fn main() {
     // let m = generator::l20::generate(arr, 5);
     // println!("len: {}, {m}", m.len());
 
-    let res = criterion::sign_independency::test(
-        vec![
-            214, 168, 122, 77, 32, 244, 200, 157, 114, 72, 30, 245, 204, 163, 123, 84, 45, 6, 224,
-            186,
-        ],
-        0.01,
-    );
-    println!("{res:?}");
+    let some_r = 2usize;
+    let some_a = 0.1;
+
+    // let generator_result = generator::buildin::generate();
+    // let bitvec: WrapperBitVec<_> = generator_result.to_bitvec().into();
+    // let byte_vec: Vec<u8> = bitvec.into();
+    // test_n_print!(generator_result, some_r, some_a);
+    // let res = criterion::sequence_homogeneity::test(byte_vec.as_slice(),some_r, some_a );
+    // println!("{res:?}");
+
+    let vec: Vec<u32> = vec![
+        214, 168, 122, 77, 32, 244, 200, 157, 114, 72, 30, 245, 204, 163, 123, 84, 45, 6, 224, 186,
+    ];
+    let bitarr = BitSlice::from_slice(vec.as_slice());
+
+    test_n_print!(bitarr, some_r, some_a, "own bytes");
+
     return;
-    criterion::sign_independency::test(vec![], 5.0);
 }
 
 // todo after every generator

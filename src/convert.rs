@@ -1,6 +1,9 @@
 use bitvec::vec::BitVec;
 
-pub struct WrapperBitVec<T> where T: bitvec::store::BitStore {
+pub struct WrapperBitVec<T>
+where
+    T: bitvec::store::BitStore,
+{
     pub array: BitVec<T>,
 }
 
@@ -10,9 +13,17 @@ impl<T: bitvec::store::BitStore> WrapperBitVec<T> {
     }
 }
 
+impl<T: bitvec::store::BitStore> From<BitVec<T>> for WrapperBitVec<T> {
+    fn from(value: BitVec<T>) -> Self {
+        WrapperBitVec::new(value)
+    }
+}
+
 // if it will take so long time, change to vec from raw parts or smth like this
 impl<T> From<WrapperBitVec<T>> for Vec<u8>
-    where T: bitvec::store::BitStore {
+where
+    T: bitvec::store::BitStore,
+{
     fn from(value: WrapperBitVec<T>) -> Self {
         let b = value.array.to_bitvec();
         let d = b.as_bitptr().pointer() as *const u8;

@@ -1,7 +1,11 @@
 use statrs::function::erf::erf_inv;
 use std::time::{Duration, Instant};
 
-pub fn test(seq: Vec<u8>, r: usize/*те на скільки розбиваємо*/, a: f64) -> (bool, f64, f64, Duration) {
+pub fn test(
+    seq: &[u8],
+    r: usize, /*те на скільки розбиваємо*/
+    a: f64,
+) -> (bool, f64, f64, Duration) {
     let start_time = Instant::now();
     let m = seq.len();
     let m1 = m / r;
@@ -9,7 +13,8 @@ pub fn test(seq: Vec<u8>, r: usize/*те на скільки розбиваєм�
 
     let mut v_ij = Vec::with_capacity(r);
     (0..r).for_each(|_| v_ij.push([0usize; 256]));
-    for (i, arr) in seq.chunks(m1).enumerate().take(m1) // r ітерацій
+    for (i, arr) in seq.chunks(m1).enumerate().take(m1)
+    // r ітерацій
     {
         for arr_i in arr {
             v_ij[i][(*arr_i) as usize] += 1;
