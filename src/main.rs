@@ -7,6 +7,7 @@ use crate::convert::WrapperBitVec;
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::prelude::*;
 use bitvec::view::BitViewSized;
+use num_bigint::BigUint;
 
 #[macro_use]
 extern crate prettytable;
@@ -29,8 +30,9 @@ fn main() {
     // let m = generator::l20::generate(arr, 5);
     // println!("len: {}, {m}", m.len());
 
-    let some_r = 2usize;
-    let some_a = 0.1;
+    //{
+    // let some_r = 2usize;
+    // let some_a = 0.1;
 
     // let generator_result = generator::buildin::generate();
     // let bitvec: WrapperBitVec<_> = generator_result.to_bitvec().into();
@@ -39,13 +41,21 @@ fn main() {
     // let res = criterion::sequence_homogeneity::test(byte_vec.as_slice(),some_r, some_a );
     // println!("{res:?}");
 
-    let vec: Vec<u32> = vec![
-        214, 168, 122, 77, 32, 244, 200, 157, 114, 72, 30, 245, 204, 163, 123, 84, 45, 6, 224, 186,
-    ];
-    let bitarr = BitSlice::from_slice(vec.as_slice());
+    // let vec: Vec<u32> = vec![
+    //     214, 168, 122, 77, 32, 244, 200, 157, 114, 72, 30, 245, 204, 163, 123, 84, 45, 6, 224, 186,
+    // ];
+    // let bitarr = BitSlice::from_slice(vec.as_slice());
+    //
+    // test_n_print!(bitarr, some_r, some_a, "own bytes");
+//}
 
-    test_n_print!(bitarr, some_r, some_a, "own bytes");
+    // {
+    //     let fu = generator::bbs_bytes::generate(BigUint::from(163u8), BigUint::from(203u8), BigUint::from(300u16), 10000);
+    //     println!("{}", fu.unwrap());
+    // }
 
+    let bm_bytes = generator::bm_bytes::generate(BigUint::from(2002001u32), BigUint::from(1480u32), BigUint::from(1001000u32), BigUint::from(200u16),1000);
+    println!("{}", bm_bytes.unwrap());
     return;
 }
 

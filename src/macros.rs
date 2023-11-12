@@ -1,6 +1,6 @@
 #[macro_export]
 macro_rules! test_n_print {
-    (  $bitvec:expr, $interals_r:expr, $a:expr, $test_name:expr) => {
+    (  $bitvec:expr, $interals_r:expr, $a:expr, $test_name:expr) => {{
         let bitvec: WrapperBitVec<_> = $bitvec.to_bitvec().into();
         let byte_vec: Vec<u8> = bitvec.into();
         let r: usize = $interals_r;
@@ -44,5 +44,5 @@ macro_rules! test_n_print {
             format!("{:?}", sequence_homogeneity.3)
         ]);
         table.printstd();
-    };
+    }};
 }

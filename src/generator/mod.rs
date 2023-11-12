@@ -7,3 +7,5 @@ pub mod l89;
 pub mod lehmer;
 pub mod librarian;
 pub mod wolfram;
+pub mod bbs_bytes;
+pub mod bm_bytes;
