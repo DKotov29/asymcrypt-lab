@@ -1,4 +1,3 @@
-use num_integer::Roots;
 use statrs::function::erf::erf_inv;
 use std::time::{Duration, Instant};
 
@@ -12,17 +11,17 @@ pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
         freq[*i as usize] += 1;
     }
     for j in 0..=255u8 {
-        let aa = (freq[j as usize] as f64 - nj);
-        statistic_value += (aa.powf(2f64) / nj);
+        let aa = freq[j as usize] as f64 - nj;
+        statistic_value += aa.powf(2f64) / nj;
     }
     let l = 255f64;
     let z = erf_inv(1.0 - a);
     let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
-    return (
+    (
         statistic_value <= critic_value,
         statistic_value,
         critic_value,
         elapsed,
-    );
+    )
 }

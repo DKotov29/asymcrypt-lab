@@ -86,6 +86,6 @@ macro_rules! bitvec_write_to_file {
             unreachable!("something left to read, so something failed");
         }
         buf.push('\n');
-        write!(file, "{}", buf);
+        write!(file, "{}", buf).unwrap();
     }};
 }

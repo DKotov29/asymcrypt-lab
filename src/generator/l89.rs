@@ -5,7 +5,7 @@ pub fn generate(array: BitVec<u32>, amount: usize) -> Option<BitVec<u32>> {
         return None;
     }
     let mut vec = array[0..89].to_bitvec();
-    for i in 0..amount {
+    for _ in 0..amount {
         vec.push(vec[vec.len() - 38] ^ vec[vec.len() - 89]);
     }
     Some(vec)

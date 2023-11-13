@@ -7,7 +7,7 @@ pub fn generate(
     p: BigUint,
     a: BigUint,
     q: BigUint,
-    mut t: BigUint,
+    t: BigUint,
     amount: usize,
 ) -> Option<BitVec<u32>> {
     if (BigUint::from(2u8) * q.clone() + BigUint::from(1u8) != p)

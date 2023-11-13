@@ -1,5 +1,4 @@
 use statrs::function::erf::erf_inv;
-use std::collections::{HashMap, HashSet};
 use std::time::{Duration, Instant};
 
 pub fn test(
@@ -30,11 +29,11 @@ pub fn test(
             for jj in 0..=(r - 1) {
                 v_i += v_ij[jj][i] as f64;
             }
-            let divvv = (m1 as f64 * v_i);
+            let divvv = m1 as f64 * v_i;
             if divvv == 0f64 {
                 continue;
             }
-            statistic_value += ((*v_ij[j].get(i).unwrap() as f64).powf(2.0) / divvv);
+            statistic_value += (*v_ij[j].get(i).unwrap() as f64).powf(2.0) / divvv;
         }
     }
     statistic_value -= 1.0;
@@ -44,10 +43,10 @@ pub fn test(
     let z = erf_inv(1.0 - a);
     let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
-    return Some((
+    Some((
         statistic_value <= critic_value,
         statistic_value,
         critic_value,
         elapsed,
-    ));
+    ))
 }

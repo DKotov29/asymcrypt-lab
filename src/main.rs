@@ -2,15 +2,11 @@ mod convert;
 mod criterion;
 mod generator;
 mod macros;
-mod testing;
 
 use crate::convert::{u8vec_to_bits, WrapperBitVec};
-use bitvec::macros::internal::funty::Fundamental;
 use bitvec::prelude::*;
-use bitvec::view::BitViewSized;
 use num_bigint::BigUint;
 use serde::Deserialize;
-use std::fmt::Write;
 use std::fs::File;
 use std::io::Read;
 use std::time::Instant;
@@ -118,8 +114,6 @@ struct InputSeqGenBbsBytes {
 }
 
 fn main() {
-    // testing::main_main();
-    // return;
     let main_start_time = Instant::now();
     let input: InputSeqGen;
     {
@@ -225,23 +219,23 @@ fn main() {
         test_n_print!(bm_bytes, r, a, "bm_bytes sequence");
     }
     {
-        // let bbs = generator::bbs::generate(BigUint::parse_bytes(input.bbs.p.as_bytes(), 16).unwrap(),
-        //                                  BigUint::parse_bytes(input.bbs.q.as_bytes(), 16).unwrap(),
-        //                                  BigUint::parse_bytes(input.bbs.r.as_bytes(), 16).unwrap(),
-        //                                  input.bbs.bits_add ).unwrap();
-        // bitvec_write_to_file!(bbs, "bbs sequence", &mut output);
-        // test_n_print!(bbs, r, a, "bbs sequence");
+        let bbs = generator::bbs::generate(BigUint::parse_bytes(input.bbs.p.as_bytes(), 16).unwrap(),
+                                         BigUint::parse_bytes(input.bbs.q.as_bytes(), 16).unwrap(),
+                                         BigUint::parse_bytes(input.bbs.r.as_bytes(), 16).unwrap(),
+                                         input.bbs.bits_add ).unwrap();
+        bitvec_write_to_file!(bbs, "bbs sequence", &mut output);
+        test_n_print!(bbs, r, a, "bbs sequence");
     }
     {
-        // let bbs_bytes = generator::bbs_bytes::generate(
-        //     BigUint::parse_bytes(input.bbs_bytes.p.as_bytes(), 16).unwrap(),
-        //     BigUint::parse_bytes(input.bbs_bytes.q.as_bytes(), 16).unwrap(),
-        //     BigUint::parse_bytes(input.bbs_bytes.r.as_bytes(), 16).unwrap(),
-        //     input.bbs_bytes.bytes_add,
-        // )
-        // .unwrap();
-        // bitvec_write_to_file!(bbs_bytes, "bbs_bytes sequence", &mut output);
-        // test_n_print!(bbs_bytes, r, a, "bbs_bytes sequence");
+        let bbs_bytes = generator::bbs_bytes::generate(
+            BigUint::parse_bytes(input.bbs_bytes.p.as_bytes(), 16).unwrap(),
+            BigUint::parse_bytes(input.bbs_bytes.q.as_bytes(), 16).unwrap(),
+            BigUint::parse_bytes(input.bbs_bytes.r.as_bytes(), 16).unwrap(),
+            input.bbs_bytes.bytes_add,
+        )
+        .unwrap();
+        bitvec_write_to_file!(bbs_bytes, "bbs_bytes sequence", &mut output);
+        test_n_print!(bbs_bytes, r, a, "bbs_bytes sequence");
     }
 
     let elapsed = main_start_time.elapsed();

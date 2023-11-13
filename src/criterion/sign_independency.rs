@@ -3,15 +3,15 @@ use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
 pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
-    let mut start_time = Instant::now();
+    let start_time = Instant::now();
     let n = seq.len() / 2;
     let mut freq: HashMap<(u8, u8), usize> = HashMap::new();
     let mut freq_first_elem = [0usize; 256];
     let mut freq_second_elem = [0usize; 256];
     let paiirs;
     {
-        let mut pairs = seq.chunks(2);
-        paiirs = pairs.take((n));
+        let pairs = seq.chunks(2);
+        paiirs = pairs.take(n);
     }
     for x in paiirs {
         *freq.entry((x[0], x[1])).or_insert(0) += 1;
@@ -37,10 +37,10 @@ pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     let z = erf_inv(1.0 - a);
     let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
-    return (
+    (
         statistic_value <= critic_value,
         statistic_value,
         critic_value,
         elapsed,
-    );
+    )
 }

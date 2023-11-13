@@ -2,9 +2,8 @@ use bitvec::prelude::*;
 use malachite::num::arithmetic::traits::{Mod, ModPow};
 use malachite::Natural;
 use num_bigint::BigUint;
-use num_integer::Integer;
 
-pub fn generate(p: BigUint, q: BigUint, mut r: BigUint, amount: usize) -> Option<BitVec<u32>> {
+pub fn generate(p: BigUint, q: BigUint, r: BigUint, amount: usize) -> Option<BitVec<u32>> {
     if r < BigUint::from(2u8) {
         return None;
     }
@@ -19,7 +18,7 @@ pub fn generate(p: BigUint, q: BigUint, mut r: BigUint, amount: usize) -> Option
 
         let x = r.clone().mod_op(&Natural::from(256u64));
         let bb = x.limbs().next().unwrap_or(0) as u8;
-        if Natural::from(bb) != x {
+        if bb != x {
             panic!("at the disco");
         }
         for bit in bb.view_bits::<Lsb0>(){

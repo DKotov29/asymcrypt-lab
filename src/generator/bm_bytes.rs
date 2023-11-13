@@ -1,7 +1,7 @@
 use bitvec::prelude::*;
 use num_bigint::BigUint;
 use num_integer::Integer;
-use std::ops::{Div, Mul, Sub};
+use std::ops::{Mul, Sub};
 
 pub fn generate(
     p: BigUint,
