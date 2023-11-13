@@ -1,5 +1,7 @@
 pub mod bbs;
+pub mod bbs_bytes;
 pub mod bm;
+pub mod bm_bytes;
 pub mod buildin;
 pub mod geffe;
 pub mod l20;
@@ -7,5 +9,3 @@ pub mod l89;
 pub mod lehmer;
 pub mod librarian;
 pub mod wolfram;
-pub mod bbs_bytes;
-pub mod bm_bytes;

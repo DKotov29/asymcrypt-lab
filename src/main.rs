@@ -2,17 +2,18 @@ mod convert;
 mod criterion;
 mod generator;
 mod macros;
+mod testing;
 
-use std::fs::File;
-use std::io::Read;
-use std::io::Write;
-use std::time::Instant;
 use crate::convert::{u8vec_to_bits, WrapperBitVec};
 use bitvec::macros::internal::funty::Fundamental;
 use bitvec::prelude::*;
 use bitvec::view::BitViewSized;
 use num_bigint::BigUint;
 use serde::Deserialize;
+use std::fmt::Write;
+use std::fs::File;
+use std::io::Read;
+use std::time::Instant;
 
 #[macro_use]
 extern crate prettytable;
@@ -83,7 +84,7 @@ struct InputSeqGenWolfram {
 }
 
 #[derive(Debug, Deserialize)]
-struct InputSeqGenBm{
+struct InputSeqGenBm {
     p: String,
     a: String,
     q: String,
@@ -92,7 +93,7 @@ struct InputSeqGenBm{
 }
 
 #[derive(Debug, Deserialize)]
-struct InputSeqGenBmBytes{
+struct InputSeqGenBmBytes {
     p: String,
     a: String,
     q: String,
@@ -101,7 +102,7 @@ struct InputSeqGenBmBytes{
 }
 
 #[derive(Debug, Deserialize)]
-struct InputSeqGenBbs{
+struct InputSeqGenBbs {
     p: String,
     q: String,
     r: String,
@@ -109,7 +110,7 @@ struct InputSeqGenBbs{
 }
 
 #[derive(Debug, Deserialize)]
-struct InputSeqGenBbsBytes{
+struct InputSeqGenBbsBytes {
     p: String,
     q: String,
     r: String,
@@ -117,15 +118,19 @@ struct InputSeqGenBbsBytes{
 }
 
 fn main() {
-
+    // testing::main_main();
+    // return;
     let main_start_time = Instant::now();
     let input: InputSeqGen;
     {
-        let mut input_info_file = File::open("input_info.toml").expect("Failed to read input_info.toml file");
+        let mut input_info_file =
+            File::open("input_info.toml").expect("Failed to read input_info.toml file");
         let mut input_info_file_content = String::new();
-        input_info_file.read_to_string(&mut input_info_file_content)
+        input_info_file
+            .read_to_string(&mut input_info_file_content)
             .expect("Failed to read file");
-        input  = toml::from_str(input_info_file_content.as_str()).expect("Failed to deserialize input_info.toml file");
+        input = toml::from_str(input_info_file_content.as_str())
+            .expect("Failed to deserialize input_info.toml file");
     }
     let mut output = File::create("seq.txt").expect("File seq.txt failes (while creating)");
 
@@ -175,10 +180,12 @@ fn main() {
         }
     }
     {
-        match generator::geffe::generate(u8vec_to_bits(input.geffe.x.as_slice()),
-                                         u8vec_to_bits(input.geffe.y.as_slice()),
-                                         u8vec_to_bits(input.geffe.s.as_slice()),
-                                         input.geffe.bits_add) {
+        match generator::geffe::generate(
+            u8vec_to_bits(input.geffe.x.as_slice()),
+            u8vec_to_bits(input.geffe.y.as_slice()),
+            u8vec_to_bits(input.geffe.s.as_slice()),
+            input.geffe.bits_add,
+        ) {
             Some(geffe) => {
                 bitvec_write_to_file!(geffe, "geffe sequence", &mut output);
                 test_n_print!(geffe, r, a, "geffe sequence");
@@ -194,7 +201,8 @@ fn main() {
         test_n_print!(librarian, r, a, "librarian sequence");
     }
     {
-        let wolfram = generator::wolfram::generate(input.wolfram.start_num, input.wolfram.bits_add).unwrap();
+        let wolfram =
+            generator::wolfram::generate(input.wolfram.start_num, input.wolfram.bits_add).unwrap();
         bitvec_write_to_file!(wolfram, "wolfram sequence", &mut output);
         test_n_print!(wolfram, r, a, "wolfram sequence");
     }
@@ -217,23 +225,24 @@ fn main() {
         test_n_print!(bm_bytes, r, a, "bm_bytes sequence");
     }
     {
-        let bbs = generator::bbs::generate(BigUint::parse_bytes(input.bbs.p.as_bytes(), 16).unwrap(),
-                                         BigUint::parse_bytes(input.bbs.q.as_bytes(), 16).unwrap(),
-                                         BigUint::parse_bytes(input.bbs.r.as_bytes(), 16).unwrap(),
-                                         input.bbs.bits_add ).unwrap();
-        bitvec_write_to_file!(bbs, "bbs sequence", &mut output);
-        test_n_print!(bbs, r, a, "bbs sequence");
+        // let bbs = generator::bbs::generate(BigUint::parse_bytes(input.bbs.p.as_bytes(), 16).unwrap(),
+        //                                  BigUint::parse_bytes(input.bbs.q.as_bytes(), 16).unwrap(),
+        //                                  BigUint::parse_bytes(input.bbs.r.as_bytes(), 16).unwrap(),
+        //                                  input.bbs.bits_add ).unwrap();
+        // bitvec_write_to_file!(bbs, "bbs sequence", &mut output);
+        // test_n_print!(bbs, r, a, "bbs sequence");
     }
     {
-        let bbs_bytes = generator::bbs_bytes::generate(BigUint::parse_bytes(input.bbs_bytes.p.as_bytes(), 16).unwrap(),
-                                           BigUint::parse_bytes(input.bbs_bytes.q.as_bytes(), 16).unwrap(),
-                                           BigUint::parse_bytes(input.bbs_bytes.r.as_bytes(), 16).unwrap(),
-                                           input.bbs_bytes.bytes_add ).unwrap();
-        bitvec_write_to_file!(bbs_bytes, "bbs_bytes sequence", &mut output);
-        test_n_print!(bbs_bytes, r, a, "bbs_bytes sequence");
+        // let bbs_bytes = generator::bbs_bytes::generate(
+        //     BigUint::parse_bytes(input.bbs_bytes.p.as_bytes(), 16).unwrap(),
+        //     BigUint::parse_bytes(input.bbs_bytes.q.as_bytes(), 16).unwrap(),
+        //     BigUint::parse_bytes(input.bbs_bytes.r.as_bytes(), 16).unwrap(),
+        //     input.bbs_bytes.bytes_add,
+        // )
+        // .unwrap();
+        // bitvec_write_to_file!(bbs_bytes, "bbs_bytes sequence", &mut output);
+        // test_n_print!(bbs_bytes, r, a, "bbs_bytes sequence");
     }
-
-
 
     let elapsed = main_start_time.elapsed();
     println!("exec duration: {elapsed:?}");

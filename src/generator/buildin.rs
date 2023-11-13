@@ -1,7 +1,7 @@
 use bitvec::prelude::*;
 use rand::Rng;
 
-pub fn generate(amount: usize) -> BitVec<u8 > {
+pub fn generate(amount: usize) -> BitVec<u8> {
     let mut vec = BitVec::with_capacity(amount.checked_mul(8usize).unwrap_or(usize::MAX));
     let mut rng = rand::thread_rng();
     for i in 0..amount {

@@ -11,7 +11,8 @@ pub fn high(num: u32, add_bytes: usize) -> BitVec<u32> {
     let mut num = num;
     for _ in 0..add_bytes {
         num = ((A as u64 * num as u64 + C as u64) % M) as u32;
-        ((num >> 24) as u8).view_bits::<Lsb0>()
+        ((num >> 24) as u8)
+            .view_bits::<Lsb0>()
             .iter()
             .for_each(|each| vec.push(*each));
     }
@@ -22,9 +23,10 @@ pub fn low(num: u32, add_bytes: usize) -> BitVec<u32> {
     let mut vec = num.view_bits().to_bitvec();
     let mut num = num;
     for _ in 0..add_bytes {
-        num = ((A as u64 * num as u64 + C as u64)  % M) as u32;
+        num = ((A as u64 * num as u64 + C as u64) % M) as u32;
 
-        (num as u8).view_bits::<Lsb0>()
+        (num as u8)
+            .view_bits::<Lsb0>()
             .iter()
             .for_each(|each| vec.push(*each));
     }

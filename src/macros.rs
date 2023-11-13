@@ -65,17 +65,19 @@ macro_rules! test_n_print {
 #[macro_export]
 macro_rules! bitvec_write_to_file {
     ($bitvec:expr, $name: expr, $file: expr) => {{
+        use std::io::Write;
         let bitvec = $bitvec.to_bitvec();
         let name: &str = $name;
         let file: &mut File = $file;
-        write!(file, "{name}: ");
+        let mut buf = String::new();
+        buf.push_str(format!("{name}: ").as_str());
 
         let d = bitvec.as_bitptr().pointer() as *const u8;
         let mut leen = bitvec.len();
         let mut start = 0isize;
         while leen >= 8 {
             let on_pos = unsafe { *(d.offset(start)) };
-            write!(file, "{:08b}", on_pos);
+            buf.push_str(format!("{:08b}", on_pos).as_str());
             leen -= 8;
             start += 1;
         }
@@ -83,10 +85,7 @@ macro_rules! bitvec_write_to_file {
             println!("{leen}");
             unreachable!("something left to read, so something failed");
         }
-
-        // for i in bitvec {
-        //     write!(file, "{}", i as u8);
-        // }
-        writeln!(file, "");
-    }}
+        buf.push('\n');
+        write!(file, "{}", buf);
+    }};
 }

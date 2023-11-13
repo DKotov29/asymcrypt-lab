@@ -1,5 +1,5 @@
-use std::collections::{HashMap, HashSet};
 use statrs::function::erf::erf_inv;
+use std::collections::{HashMap, HashSet};
 use std::time::{Duration, Instant};
 
 pub fn test(
@@ -30,7 +30,7 @@ pub fn test(
             for jj in 0..=(r - 1) {
                 v_i += v_ij[jj][i] as f64;
             }
-            let divvv =  (m1 as f64 * v_i);
+            let divvv = (m1 as f64 * v_i);
             if divvv == 0f64 {
                 continue;
             }
