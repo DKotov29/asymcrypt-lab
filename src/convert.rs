@@ -19,6 +19,12 @@ impl<T: bitvec::store::BitStore> From<BitVec<T>> for WrapperBitVec<T> {
     }
 }
 
+pub fn u8vec_to_bits(s: &[u8]) -> BitVec<u32> {
+    let mut vec = BitVec::new();
+    s.iter().for_each(|x| vec.push(*x != 0));
+    vec
+}
+
 // if it will take so long time, change to vec from raw parts or smth like this
 impl<T> From<WrapperBitVec<T>> for Vec<u8>
 where

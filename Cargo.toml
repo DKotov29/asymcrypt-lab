@@ -12,3 +12,5 @@ num-bigint = "0.4.4"
 num-integer = "0.1.45"
 statrs = "0.16.0"
 prettytable-rs = "^0.10"
+toml = "0.8.8"
+serde = { version = "1.0.192", features = ["derive"] }
