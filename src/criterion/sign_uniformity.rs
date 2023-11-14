@@ -1,5 +1,5 @@
-use statrs::function::erf::erf_inv;
 use std::time::{Duration, Instant};
+use distrs::Normal;
 
 pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     let start_time = Instant::now();
@@ -15,7 +15,8 @@ pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
         statistic_value += aa.powf(2f64) / nj;
     }
     let l = 255f64;
-    let z = erf_inv(1.0 - a);
+
+    let z = Normal::ppf(1.0 - a, 0f64, 1f64);
     let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
     (

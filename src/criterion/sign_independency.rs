@@ -1,6 +1,6 @@
-use statrs::function::erf::erf_inv;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
+use distrs::Normal;
 
 pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     let start_time = Instant::now();
@@ -34,7 +34,7 @@ pub fn test(seq: &[u8], a: f64) -> (bool, f64, f64, Duration) {
     statistic_value -= 1.0;
     statistic_value *= n as f64;
     let l = 255f64.powf(2.0);
-    let z = erf_inv(1.0 - a);
+    let z = Normal::ppf(1.0 - a, 0f64, 1f64);
     let critic_value: f64 = (2f64 * l).sqrt() * z + l;
     let elapsed = start_time.elapsed();
     (
